@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Interface</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <!-- User Profile sections -->
+      <div class="linguai">LinguaAI</div>
+      <div class="user-profile">АЛЕКСАНДР ПУШКИН</div>
+      <div class="user-profile">ЛЕВ ТОЛСТОЙ</div>
+      <div class="user-profile">ФЕДОР ДОСТОЕВСКИЙ</div>
+      <div class="user-profile">ИВАН ТУРГЕНЕВ</div>
+      <div class="user-profile">НИКОЛАЙ ГОГОЛЬ</div>
+      <div class="user-profile">АНТОН ЧЕХОВ</div>
+      <div class="user-profile">АЛЕКСАНДР ОСТРОВСКИЙ</div>
+      <div class="user-profile">Лев Толстой</div>
+      <div class="user-profile">Лев Толстой</div>
+      <div class="user-profile">Лев Толстой</div>
+      <div class="user-profile">Лев Толстой</div>
+      <!-- ... Add more user profiles as needed -->
+    </div>
+
+    <div class="chat-container">
+      <div class="chat-messages"></div>
+      <div class="chat-form">
+        <input type="text" id="chat-input" placeholder="Type a message..." />
+        <button id="send-button">Send</button>
+      </div>
+    </div>
+
+    <div class="video-container">
+      <video id="video-element" src="pushkin.mp4" controls>
+        <!-- Video source will be set in JavaScript -->
+      </video>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
