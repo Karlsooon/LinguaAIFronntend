@@ -37,6 +37,24 @@ html {
 .user-profile:hover {
   background-color: #4b4b4b;
 }
+/* Add styles for the play button */
+.play-button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.play-button:hover {
+  background-color: #45a049; /* Darker green */
+}
 
 .chat-container {
   width: 850px;
@@ -91,4 +109,20 @@ html {
 #video-element {
   width: 100%; /* This will stretch the video to fill the frame */
   height: auto; /* This will maintain the aspect ratio of the video */
+}
+/* Add styles for chat messages */
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.user-message {
+  background-color: #d2e3fc;
+  color: #000;
+}
+
+.response-message {
+  background-color: #f0f0f0;
+  color: #333;
 }
