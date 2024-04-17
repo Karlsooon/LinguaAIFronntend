@@ -39,45 +39,6 @@ function sendMessage() {
 
 // Function to display a message in the chat interface
 // Function to display a message in the chat interface
-function displayMessage(message, type, userData) {
-  // Create a new message element
-  const messageElement = document.createElement("div");
-  messageElement.classList.add("message");
-
-  // Apply appropriate CSS class based on message type
-  if (type === "user") {
-    messageElement.classList.add("user-message");
-  } else if (type === "response") {
-    messageElement.classList.add("response-message");
-  }
-
-  // Set the message content
-  messageElement.innerText = message;
-
-  // Create a play button for audio response
-  if (type === "response") {
-    const playButton = document.createElement("button");
-    playButton.innerText = "Play";
-    playButton.classList.add("play-button");
-    playButton.addEventListener("click", () => {
-      playVideoAndAudio(userData.video, userData.audio_url);
-    });
-    messageElement.appendChild(playButton);
-  }
-
-  // Append the message element to the chat messages container
-  document.querySelector(".chat-messages").appendChild(messageElement);
-}
-
-// Function to play both video and audio
-function playVideoAndAudio(videoSrc, audioSrc) {
-  // Play video
-  playVideo(videoSrc);
-
-  // Play audio
-  const audioElement = new Audio(audioSrc);
-  audioElement.play();
-}
 
 // Define a dictionary to map user profiles to their corresponding greeting messages and videos
 const userData = {
@@ -138,6 +99,46 @@ const userData = {
   },
   // Добавьте приветствия и видео для других пользовательских профилей по мере необходимости
 };
+function displayMessage(message, type, userData) {
+  // Create a new message element
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("message");
+
+  // Apply appropriate CSS class based on message type
+  if (type === "user") {
+    messageElement.classList.add("user-message");
+  } else if (type === "response") {
+    messageElement.classList.add("response-message");
+  }
+
+  // Set the message content
+  messageElement.innerText = message;
+
+  // Create a play button for audio response
+  if (type === "response") {
+    const playButton = document.createElement("button");
+    playButton.innerText = "Play";
+    playButton.classList.add("play-button");
+    playButton.addEventListener("click", () => {
+      playVideoAndAudio(userData.video, userData.audio_url);
+    });
+    messageElement.appendChild(playButton);
+  }
+
+  // Append the message element to the chat messages container
+  document.querySelector(".chat-messages").appendChild(messageElement);
+}
+
+// Function to play both video and audio
+// Function to play both video and audio
+function playVideoAndAudio(videoSrc, audioSrc) {
+  // Play video
+  playVideo(videoSrc);
+
+  // Play audio
+  const audioElement = new Audio(audioSrc);
+  audioElement.play();
+}
 
 // Add event listener to user profiles in the sidebar
 const userProfiles = document.querySelectorAll(".user-profile");
