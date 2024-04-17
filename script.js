@@ -139,8 +139,8 @@ function sendMessage() {
     });
 }
 
-// Function to display a message in the chat interface
-function displayMessage(message, type, audioUrl) {
+// Define the displayMessage function
+function displayMessage(message, type, audioUrl, videoSrc) {
   // Create a new message element
   const messageElement = document.createElement("div");
   messageElement.classList.add("message");
@@ -162,7 +162,7 @@ function displayMessage(message, type, audioUrl) {
     playButton.classList.add("play-button");
     playButton.addEventListener("click", () => {
       playAudio(audioUrl);
-      playVideo(userData.video);
+      playVideo(videoSrc);
     });
     messageElement.appendChild(playButton);
   }
@@ -176,6 +176,8 @@ function playAudio(audioUrl) {
   const audioElement = new Audio(audioUrl);
   audioElement.play();
 }
+
+// Function to play video
 function playVideo(videoSrc) {
   const videoElement = document.getElementById("video-element");
   videoElement.src = videoSrc;
