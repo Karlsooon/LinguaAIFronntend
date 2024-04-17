@@ -1,45 +1,3 @@
-// Define the sendMessage function
-function sendMessage() {
-  // Get the message entered by the user
-  const messageInput = document.getElementById("chat-input");
-  const message = messageInput.value;
-
-  // Display the user message in the chat interface
-  displayMessage(message, "user");
-
-  // Clear the message input field
-  messageInput.value = "";
-
-  // Send the user's message to the backend
-  fetch("http://localhost:8000/chat/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ message: message }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Display the response from the backend in the chat interface
-      const response = data.response;
-      const userData = data.userData; // Assuming the backend sends user data
-      displayMessage(response, "response", userData);
-    })
-    .catch((error) => {
-      console.error("Error sending message:", error);
-      // Optionally display an error message in the chat interface
-      displayMessage("Error sending message", "response");
-    });
-}
-
-// Function to display a message in the chat interface
-// Function to display a message in the chat interface
-
 // Define a dictionary to map user profiles to their corresponding greeting messages and videos
 const userData = {
   "АЛЕКСАНДР ПУШКИН": {
@@ -177,10 +135,10 @@ function playAudio(audioUrl) {
   audioElement.play();
 }
 
-// Function to play video
 function playVideo(videoSrc) {
   const videoElement = document.getElementById("video-element");
-  videoElement.src = videoSrc;
+  videoElement.src = videoSrc; // Assuming videos are located in the assets folder
+  videoElement.muted = true; // Mute the audio
   videoElement.play();
 }
 
@@ -209,11 +167,12 @@ function openChat(event) {
   const data = userData[userName];
 
   // Display the greeting message in the chat interface
-  displayMessage(data.greeting, "response", data);
+  displayMessage(data.greeting, "response", data, data.video);
 
   // Set the source of the video element
   const videoElement = document.getElementById("video-element");
   videoElement.src = data.video;
+  videoElement.play();
 }
 
 // Function to clear existing messages in the chat interface
