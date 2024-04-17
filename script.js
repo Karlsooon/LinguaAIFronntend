@@ -161,7 +161,8 @@ function displayMessage(message, type, audioUrl) {
     playButton.innerText = "Play";
     playButton.classList.add("play-button");
     playButton.addEventListener("click", () => {
-      playAudio(audioUrl); // Call the playAudio function with the audio URL
+      playAudio(audioUrl);
+      playVideo(userData.video);
     });
     messageElement.appendChild(playButton);
   }
@@ -174,6 +175,11 @@ function displayMessage(message, type, audioUrl) {
 function playAudio(audioUrl) {
   const audioElement = new Audio(audioUrl);
   audioElement.play();
+}
+function playVideo(videoSrc) {
+  const videoElement = document.getElementById("video-element");
+  videoElement.src = videoSrc;
+  videoElement.play();
 }
 
 // Add event listener to the send button
@@ -221,11 +227,7 @@ function clearVideo() {
 }
 
 // Function to play the video
-function playVideo(videoSrc) {
-  const videoElement = document.getElementById("video-element");
-  videoElement.src = videoSrc;
-  videoElement.play();
-}
+
 document.addEventListener("DOMContentLoaded", function () {
   // Add event listener to the send button
   const sendButton = document.getElementById("send-button");
