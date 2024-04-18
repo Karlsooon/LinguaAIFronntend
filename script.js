@@ -125,7 +125,6 @@ function displayMessage(message, type, audioUrl, videoSrc) {
     messageElement.appendChild(playButton);
   }
 
-  // Append the message element to the chat messages container
   document.querySelector(".chat-messages").appendChild(messageElement);
 }
 
