@@ -128,7 +128,6 @@ function displayMessage(message, type, audioUrl, videoSrc) {
   document.querySelector(".chat-messages").appendChild(messageElement);
 }
 
-// Function to play audio
 function playAudio(audioUrl) {
   const audioElement = new Audio(audioUrl);
   audioElement.play();
