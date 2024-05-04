@@ -1,56 +1,57 @@
 // Define a dictionary to map user profiles to their corresponding greeting messages and videos
 const userData = {
-  "АЛЕКСАНДР ПУШКИН": {
+  video_1: {
     greeting:
       "Привет, я Пушкин. Ты можешь спросить у меня все, что связано с русским языком.",
     video: "pushkin.mp4",
   },
-  "ЛЕВ ТОЛСТОЙ": {
-    greeting:
-      "Привет, я Толстой. Ты можешь спросить у меня все, что связано с русским языком.",
-    video: "tolstoy.mp4",
-  },
-  "ФЕДОР ДОСТОЕВСКИЙ": {
-    greeting:
-      "Привет, я Достоевский. Ты можешь спросить у меня все, что связано с русским языком.",
-    video: "dostoevsky.mp4",
-  },
-  "ИВАН ТУРГЕНЕВ": {
-    greeting:
-      "Привет, я Тургенев. Ты можешь спросить у меня все, что связано с русским языком.",
-    video: "turgenev.mp4",
-  },
-  "НИКОЛАЙ ГОГОЛЬ": {
-    greeting:
-      "Привет, я Гоголь. Ты можешь спросить у меня все, что связано с русским языком.",
-    video: "gogol.mp4",
-  },
-  "АНТОН ЧЕХОВ": {
-    greeting:
-      "Привет, я Чехов. Ты можешь спросить у меня все, что связано с русским языком.",
-    video: "chehov.mp4",
-  },
-  "АЛЕКСАНДР ОСТРОВСКИЙ": {
-    greeting:
-      "Привет, я Островский. Ты можешь спросить у меня все, что связано с русским языком.",
-    video: "ostrovsky.mp4",
-  },
-  "ИВАН ГОНЧАРОВ": {
-    greeting:
-      "Привет, я Гончаров. Ты можешь спросить у меня все, что связано с русским языком.",
-    video: "goncharov.mp4",
-  },
-  "АЛЕКСАНДР ГРИБОЕДОВ": {
-    greeting:
-      "Привет, я Грибоедов. Ты можешь спросить у меня все, что связано с русским языком.",
-    video: "griboedov.mp4",
-  },
-  "МИХАИЛ ЛЕРМОНТОВ": {
+  video_2: {
     greeting:
       "Привет, я Лермонтов. Ты можешь спросить у меня все, что связано с русским языком.",
     video: "lermontov.mp4",
   },
-  "НИКОЛАЙ НЕКРАСОВ": {
+  video_3: {
+    greeting:
+      "Привет, я Толстой. Ты можешь спросить у меня все, что связано с русским языком.",
+    video: "tolstoy.mp4",
+  },
+  video_4: {
+    greeting:
+      "Привет, я Достоевский. Ты можешь спросить у меня все, что связано с русским языком.",
+    video: "dostoevsky.mp4",
+  },
+  video_5: {
+    greeting:
+      "Привет, я Тургенев. Ты можешь спросить у меня все, что связано с русским языком.",
+    video: "turgenev.mp4",
+  },
+  video_6: {
+    greeting:
+      "Привет, я Гоголь. Ты можешь спросить у меня все, что связано с русским языком.",
+    video: "gogol.mp4",
+  },
+  video_7: {
+    greeting:
+      "Привет, я Чехов. Ты можешь спросить у меня все, что связано с русским языком.",
+    video: "chehov.mp4",
+  },
+  video_8: {
+    greeting:
+      "Привет, я Островский. Ты можешь спросить у меня все, что связано с русским языком.",
+    video: "ostrovsky.mp4",
+  },
+  video_9: {
+    greeting:
+      "Привет, я Гончаров. Ты можешь спросить у меня все, что связано с русским языком.",
+    video: "goncharov.mp4",
+  },
+  video_10: {
+    greeting:
+      "Привет, я Грибоедов. Ты можешь спросить у меня все, что связано с русским языком.",
+    video: "griboedov.mp4",
+  },
+
+  video_11: {
     greeting:
       "Привет, я Некрасов. Ты можешь спросить у меня все, что связано с русским языком.",
     video: "nekrasov.mp4",
@@ -63,7 +64,6 @@ function sendMessage() {
   // Get the message entered by the user
   const messageInput = document.getElementById("chat-input");
   const message = messageInput.value;
-
   // Display the user message in the chat interface
   displayMessage(message, "user");
 
@@ -88,7 +88,8 @@ function sendMessage() {
       // Display the response from the backend in the chat interface
       const response = data.response;
       const audioUrl = data.audio_url; // Get the audio URL from the response
-      displayMessage(response, "response", audioUrl); // Pass the audio URL to the displayMessage function
+      const videoSrc = document.getElementById("video-element").src;
+      displayMessage(response, "response", audioUrl, videoSrc); // Pass the audio URL to the displayMessage function
     })
     .catch((error) => {
       console.error("Error sending message:", error);
@@ -120,6 +121,7 @@ function displayMessage(message, type, audioUrl, videoSrc) {
     playButton.classList.add("play-button");
     playButton.addEventListener("click", () => {
       playAudio(audioUrl);
+      console.log({ audioUrl, videoSrc });
       playVideo(videoSrc);
     });
     messageElement.appendChild(playButton);
@@ -130,7 +132,24 @@ function displayMessage(message, type, audioUrl, videoSrc) {
 
 function playAudio(audioUrl) {
   const audioElement = new Audio(audioUrl);
+  const videoElement = document.getElementById("video-element");
+
+  // Play the audio
   audioElement.play();
+
+  // When the audio ends, stop the video
+  audioElement.onended = function () {
+    videoElement.pause();
+    videoElement.currentTime = 0;
+  };
+
+  // When the video ends, restart it if audio is still playing
+  videoElement.onended = function () {
+    if (!audioElement.paused && !audioElement.ended) {
+      this.currentTime = 0;
+      this.play();
+    }
+  };
 }
 
 function playVideo(videoSrc) {
@@ -149,17 +168,19 @@ document.addEventListener("DOMContentLoaded", function () {
 // Add event listener to user profiles in the sidebar
 const userProfiles = document.querySelectorAll(".user-profile");
 userProfiles.forEach((profile) => {
+  const key = profile.getAttribute("data-key");
   profile.addEventListener("click", openChat);
 });
 
 // Define the openChat function
 function openChat(event) {
+  console.log({ event });
   // Clear existing messages and video in the chat interface
   clearChat();
   clearVideo();
 
   // Get the selected user's name
-  const userName = event.target.textContent;
+  const userName = event.target.dataset?.key;
 
   // Get the user data for the selected assistant
   const data = userData[userName];
@@ -170,7 +191,7 @@ function openChat(event) {
   // Set the source of the video element
   const videoElement = document.getElementById("video-element");
   videoElement.src = data.video;
-  videoElement.play();
+  videoElement.pause();
 }
 
 // Function to clear existing messages in the chat interface
